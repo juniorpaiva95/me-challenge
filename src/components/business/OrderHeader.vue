@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { User, Mail, Phone, Info } from 'lucide-vue-next'
-import { Badge } from '@/components/ui'
+import { Badge, AlertMessage } from '@/components/ui'
 import { useOrder } from '@/composables/useOrder'
 import { onMounted } from 'vue'
 import { formatCurrency } from '@/utils/utils'
@@ -51,18 +51,7 @@ onMounted(async () => {
     </div>
 
     <!-- Error state -->
-    <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-      <div class="flex items-center">
-        <span class="text-red-600 mr-2">⚠️</span>
-        <span class="text-red-800">{{ error }}</span>
-        <button
-          @click="handleErrorClear"
-          class="ml-auto text-red-600 hover:text-red-800 text-sm underline"
-        >
-          Dismiss
-        </button>
-      </div>
-    </div>
+    <AlertMessage v-else-if="error" type="error" :message="error" dismissible class="mb-4" />
 
     <!-- Content -->
     <div v-else class="flex flex-col gap-6 md:flex-row">

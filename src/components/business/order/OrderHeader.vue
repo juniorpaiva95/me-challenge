@@ -14,6 +14,7 @@ import { Badge, AlertMessage, Collapse, CardInfo } from '@/components/ui'
 import { useOrder } from '@/composables/useOrder'
 import { onMounted } from 'vue'
 import { formatCurrency } from '@/utils/utils'
+import Skeleton from '../../ui/Skeleton.vue'
 
 interface OrderHeaderProps {
   orderNumber?: string
@@ -52,12 +53,12 @@ onMounted(async () => {
 <template>
   <div class="bg-white rounded-lg shadow-2xs border border-gray-200 p-6">
     <!-- Loading state -->
-    <div v-if="loading" class="flex justify-center items-center py-8">
+    <!-- <div v-if="loading" class="flex justify-center items-center py-8">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-    </div>
+    </div> -->
 
     <!-- Error state -->
-    <AlertMessage v-else-if="error" type="error" :message="error" dismissible class="mb-4" />
+    <AlertMessage v-if="error" type="error" :message="error" dismissible class="mb-4" />
 
     <!-- Content -->
     <div v-else class="flex flex-col gap-6 md:flex-row">
@@ -75,46 +76,84 @@ onMounted(async () => {
         <div class="flex flex-col items-center md:items-start">
           <!-- Buyer Details -->
           <div class="mb-6 lg:mb-0">
-            <h3 class="text-xl font-semibold text-[#303E49!important] mb-4">
-              {{ order?.header.buyer }}
-            </h3>
-            <div class="space-y-3">
-              <div class="flex items-center text-gray-700">
-                <User class="w-4 h-4 mr-3 text-gray-500" />
-                <span class="text-sm font-normal">{{ order?.header.contact.name }}</span>
+            <template v-if="loading">
+              <Skeleton shape="line" width="100%" height="16px" />
+              <div class="space-y-3">
+                <div class="flex items-center text-gray-700">
+                  <User class="w-4 h-4 mr-3 text-gray-500" />
+                  <Skeleton shape="line" width="100%" height="16px" />
+                </div>
+                <div class="flex flex-col md:flex-row justify-start gap-3 md:gap-10">
+                  <div class="flex items-center text-gray-700">
+                    <Mail class="w-4 h-4 mr-3 text-gray-500" />
+                    <Skeleton shape="line" :width="150" height="16px" />
+                  </div>
+                  <div class="flex items-center text-gray-700">
+                    <Phone class="w-4 h-4 mr-3 text-gray-500" />
+                    <Skeleton shape="line" :width="150" height="16px" />
+                  </div>
+                  <div class="flex items-center text-gray-700">
+                    <Phone class="w-4 h-4 mr-3 text-gray-500" />
+                    <Skeleton shape="line" :width="150" height="16px" />
+                  </div>
+                </div>
               </div>
-              <div class="flex flex-col md:flex-row justify-start gap-3 md:gap-10">
+            </template>
+            <template v-else>
+              <h3 class="text-xl font-semibold text-[#303E49!important] mb-4">
+                {{ order?.header.buyer }}
+              </h3>
+              <div class="space-y-3">
                 <div class="flex items-center text-gray-700">
-                  <Mail class="w-4 h-4 mr-3 text-gray-500" />
-                  <span class="text-sm font-normal">{{ order?.header.contact.email }}</span>
+                  <User class="w-4 h-4 mr-3 text-gray-500" />
+                  <span class="text-sm font-normal">{{ order?.header.contact.name }}</span>
                 </div>
-                <div class="flex items-center text-gray-700">
-                  <Phone class="w-4 h-4 mr-3 text-gray-500" />
-                  <span class="text-sm font-normal">{{ order?.header.contact.phone }}</span>
-                </div>
-                <div class="flex items-center text-gray-700">
-                  <Phone class="w-4 h-4 mr-3 text-gray-500" />
-                  <span class="text-sm font-normal">{{ order?.header.contact.fax }}</span>
+                <div class="flex flex-col md:flex-row justify-start gap-3 md:gap-10">
+                  <div class="flex items-center text-gray-700">
+                    <Mail class="w-4 h-4 mr-3 text-gray-500" />
+                    <span class="text-sm font-normal">{{ order?.header.contact.email }}</span>
+                  </div>
+                  <div class="flex items-center text-gray-700">
+                    <Phone class="w-4 h-4 mr-3 text-gray-500" />
+                    <span class="text-sm font-normal">{{ order?.header.contact.phone }}</span>
+                  </div>
+                  <div class="flex items-center text-gray-700">
+                    <Phone class="w-4 h-4 mr-3 text-gray-500" />
+                    <span class="text-sm font-normal">{{ order?.header.contact.fax }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </template>
           </div>
         </div>
       </div>
 
       <!-- Right Section - Amount, Status and Timestamp -->
       <div class="flex flex-col justify-center items-center">
-        <div class="text-2xl font-bold text-gray-800 mb-3">
-          {{ formatCurrency(order?.header.currency, order?.header.price ?? 0) }}
-        </div>
-        <Badge variant="success" size="md" class="mb-4">
-          {{ order?.header.status }}
-        </Badge>
+        <template v-if="loading">
+          <Skeleton shape="line" width="100%" height="16px" />
+          <Skeleton shape="line" width="100%" height="16px" />
+        </template>
+        <template v-else>
+          <div class="text-2xl font-bold text-gray-800 mb-3">
+            {{ formatCurrency(order?.header.currency, order?.header.price ?? 0) }}
+          </div>
+          <Badge variant="success" size="md" class="mb-4">
+            {{ order?.header.status }}
+          </Badge>
+        </template>
+
         <div class="text-sm text-gray-500 flex items-center justify-end">
-          <span>Created at {{ order?.header.createdAt }}</span>
-          <span class="ml-2 text-gray-400">
-            <Info class="w-4 h-4" />
-          </span>
+          <template v-if="loading">
+            <Skeleton shape="line" :width="150" height="16px" />
+            <Skeleton shape="circle" :width="16" height="16" class="ml-2" />
+          </template>
+          <template v-else>
+            <span>Created at {{ order?.header.createdAt }}</span>
+            <span class="ml-2 text-gray-400">
+              <Info class="w-4 h-4" />
+            </span>
+          </template>
         </div>
       </div>
     </div>
@@ -122,6 +161,7 @@ onMounted(async () => {
 
     <div class="w-full">
       <CardInfo
+        :loading="loading"
         title="Supplier"
         entity="Motion Industries INC"
         :badge="{
@@ -135,40 +175,90 @@ onMounted(async () => {
           <!-- Coluna 1 -->
           <div class="space-y-3">
             <div class="flex items-center text-gray-700">
-              <Building2
-                v-if="order?.supplier?.document.type === 'CNPJ'"
-                class="w-4 h-4 mr-3 text-gray-500"
-              />
-              <User v-else class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.document?.value }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <Building2
+                  v-if="order?.supplier?.document.type === 'CNPJ'"
+                  class="w-4 h-4 mr-3 text-gray-500"
+                />
+                <User v-else class="w-4 h-4 mr-3 text-gray-500" />
+
+                <span class="text-sm">{{ order?.supplier?.document?.value }}</span>
+              </template>
             </div>
             <div class="flex items-center text-gray-700">
-              <MapPin class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.address }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <MapPin class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.address }}</span>
+              </template>
             </div>
             <div class="flex items-center text-gray-700">
-              <User class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.contact?.name }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <User class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.contact?.name }}</span>
+              </template>
             </div>
           </div>
 
           <!-- Coluna 2 -->
           <div class="space-y-3">
             <div class="flex items-center text-gray-700">
-              <Mail class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.contact?.email }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <Mail class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.contact?.email }}</span>
+              </template>
             </div>
             <div class="flex items-center text-gray-700">
-              <Phone class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.contact?.phone }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <Phone class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.contact?.phone }}</span>
+              </template>
             </div>
             <div class="flex items-center text-gray-700">
-              <Printer class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.contact?.fax }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <Printer class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.contact?.fax }}</span>
+              </template>
             </div>
             <div class="flex items-center text-gray-700">
-              <BookOpenCheck class="w-4 h-4 mr-3 text-gray-500" />
-              <span class="text-sm">{{ order?.supplier?.readAt }}</span>
+              <template v-if="loading">
+                <Skeleton shape="circle" width="16px" height="16px" class="mr-3" />
+                <Skeleton shape="line" width="100%" height="16px" />
+              </template>
+
+              <template v-else>
+                <BookOpenCheck class="w-4 h-4 mr-3 text-gray-500" />
+                <span class="text-sm">{{ order?.supplier?.readAt }}</span>
+              </template>
             </div>
           </div>
         </div>

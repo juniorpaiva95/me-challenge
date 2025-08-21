@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { Component, VNode } from 'vue'
 import Badge from '../../ui/Badge.vue'
+import Skeleton from '../../ui/Skeleton.vue'
 
 interface CardInfoProps {
-  title: string
-  entity: string
+  title: string | Component | VNode
+  entity: string | Component | VNode
+  skeleton?: Component | VNode
   badge?: {
     text: string
     variant?: 'success' | 'error' | 'warning' | 'info'
@@ -15,6 +18,7 @@ interface CardInfoProps {
   titleClass?: string
   entityClass?: string
   badgeClass?: string
+  loading?: boolean
 }
 
 const props = withDefaults(defineProps<CardInfoProps>(), {
@@ -24,6 +28,7 @@ const props = withDefaults(defineProps<CardInfoProps>(), {
   titleClass: '',
   entityClass: '',
   badgeClass: '',
+  loading: false,
 })
 
 const headerClasses = computed(() => {
@@ -34,14 +39,14 @@ const headerClasses = computed(() => {
 })
 
 const titleClasses = computed(() => {
-  const baseClasses = 'text-sm text-gray-500 font-medium'
+  const baseClasses = 'text-sm text-gray-500 font-medium mb-2'
   const customClasses = props.titleClass
 
   return `${baseClasses} ${customClasses}`.trim()
 })
 
 const entityClasses = computed(() => {
-  const baseClasses = 'text-base font-semibold text-gray-900'
+  const baseClasses = 'text-base font-semibold text-gray-900 mb-2'
   const customClasses = props.entityClass
 
   return `${baseClasses} ${customClasses}`.trim()
@@ -67,22 +72,27 @@ const bodyClasses = computed(() => {
     <div :class="headerClasses">
       <div class="flex-1">
         <div :class="titleClasses">
-          {{ title }}
+          <Skeleton shape="line" :width="100" v-if="loading" />
+          <component v-else-if="typeof title !== 'string'" :is="title" />
+          <span v-else>{{ title }}</span>
         </div>
 
         <div class="flex items-center">
-          <span :class="entityClasses">
-            {{ entity }}
-          </span>
+          <Skeleton shape="line" :width="200" v-if="loading" />
+          <component v-else-if="typeof entity !== 'string'" :is="entity" />
+          <span v-else :class="entityClasses">{{ entity }}</span>
 
-          <Badge
-            v-if="badge"
-            :variant="badge.variant || 'info'"
-            :size="badge.size || 'sm'"
-            :class="badgeClasses"
-          >
-            {{ badge.text }}
-          </Badge>
+          <div class="ml-2">
+            <Skeleton shape="line" :width="100" v-if="loading" />
+            <Badge
+              v-if="badge && !loading"
+              :variant="badge.variant || 'info'"
+              :size="badge.size || 'sm'"
+              :class="badgeClasses"
+            >
+              {{ badge.text }}
+            </Badge>
+          </div>
         </div>
       </div>
     </div>

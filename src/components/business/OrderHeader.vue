@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { User, Mail, Phone, Info } from 'lucide-vue-next'
-import { Badge, AlertMessage } from '@/components/ui'
+import { User, Mail, Phone, Info, MapPinHouse } from 'lucide-vue-next'
+import { Badge, AlertMessage, Collapse } from '@/components/ui'
 import { useOrder } from '@/composables/useOrder'
 import { onMounted } from 'vue'
 import { formatCurrency } from '@/utils/utils'
@@ -31,11 +31,7 @@ withDefaults(defineProps<OrderHeaderProps>(), {
   createdAt: '2020-04-16 at 15:32:55',
 })
 
-const { loading, error, clearError, fetchOrderById, order } = useOrder()
-
-const handleErrorClear = () => {
-  clearError()
-}
+const { loading, error, fetchOrderById, order } = useOrder()
 
 onMounted(async () => {
   // @TODO: Simular rota com parametros, recuperar pelo roteamento
@@ -112,5 +108,23 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <br />
+    <Collapse :defaultOpen="true">
+      <template #header>
+        <div class="flex items-center">
+          <span class="font-semibold !text-[#303E49] mr-2">Address</span>
+          <!-- <MapPinHouse class="w-4 h-4 !text-[#303E49]" /> -->
+        </div>
+      </template>
+      <div class="space-y-3">
+        <p class="text-sm text-gray-700"><strong>Nome:</strong> {{ order?.header.buyer }}</p>
+        <p class="text-sm text-gray-700">
+          <strong>Email:</strong> {{ order?.header.contact.email }}
+        </p>
+        <p class="text-sm text-gray-700">
+          <strong>Telefone:</strong> {{ order?.header.contact.phone }}
+        </p>
+      </div>
+    </Collapse>
   </div>
 </template>

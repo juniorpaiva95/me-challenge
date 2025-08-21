@@ -1,11 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { OrderHeader } from '@/components/business'
+</script>
 
 <template>
-  <h1>You did it!!!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="min-h-screen p-6">
+    <!-- Order Header Component -->
+    <OrderHeader />
+
+    <!-- Main Content -->
+    <main class="container section"></main>
+  </div>
 </template>
 
 <style scoped></style>

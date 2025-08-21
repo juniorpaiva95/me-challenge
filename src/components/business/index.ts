@@ -1,1 +1,1 @@
-export { default as OrderHeader } from './OrderHeader.vue'
+export { default as OrderHeader } from './order/OrderHeader.vue'

@@ -9,6 +9,7 @@ interface CollapseProps {
   headerClass?: string
   bodyClass?: string
   iconClass?: string
+  noBorder?: boolean
 }
 
 const props = withDefaults(defineProps<CollapseProps>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<CollapseProps>(), {
   headerClass: '',
   bodyClass: '',
   iconClass: '',
+  noBorder: false,
 })
 
 const emit = defineEmits<{
@@ -89,7 +91,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="border border-gray-200 rounded-lg overflow-hidden p-3">
+  <div :class="noBorder ? '' : 'border border-gray-200 rounded-lg overflow-hidden p-3'">
     <!-- Header do Collapse -->
     <button
       :class="headerClasses"

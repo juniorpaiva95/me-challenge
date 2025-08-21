@@ -1,5 +1,22 @@
+// Configuração da API que funciona tanto em desenvolvimento quanto em produção
+const isDevelopment = import.meta.env.DEV
+
+// URL base da API - em desenvolvimento usa proxy, em produção usa URL completa
+const getBaseUrl = () => {
+  // Se tiver uma variável de ambiente específica, usa ela
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL
+  }
+
+  // Caso contrário, usa a lógica padrão
+  if (isDevelopment) {
+    return '/api'
+  }
+  return 'https://api.mercadoe.space'
+}
+
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api',
+  BASE_URL: getBaseUrl(),
 
   TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000'),
 

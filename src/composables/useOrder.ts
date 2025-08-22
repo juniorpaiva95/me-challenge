@@ -25,7 +25,7 @@ export function useOrder() {
       error.value = err instanceof Error ? err.message : 'Erro ao buscar pedido'
       throw err
     } finally {
-      loading.value = true
+      loading.value = false
     }
   }
 

@@ -34,6 +34,7 @@ export class AxiosHttpClient implements HttpClient {
 
         return config
       },
+
       (error) => {
         return Promise.reject(this.handleError(error))
       },

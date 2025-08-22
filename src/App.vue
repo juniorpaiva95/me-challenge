@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { OrderHeader, OrderDetails } from '@/components/business'
 import { useOrder } from '@/composables/useOrder'
+import { RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 
 const { fetchOrderById } = useOrder()
@@ -12,12 +12,8 @@ onMounted(async () => {
 
 <template>
   <div class="min-h-screen p-6">
-    <!-- Order Header Component -->
-    <OrderHeader />
-
-    <!-- Main Content -->
-    <main class="section py-10">
-      <OrderDetails />
+    <main class="section">
+      <RouterView />
     </main>
   </div>
 </template>

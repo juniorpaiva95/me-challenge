@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { User, Mail, Phone, Info } from 'lucide-vue-next'
-import { Badge, AlertMessage } from '@/components/ui'
+import { Badge } from '@/components/ui'
 import { useOrder } from '@/composables/useOrder'
 import { formatCurrency } from '@/utils/utils'
 import Skeleton from '../../ui/Skeleton.vue'
@@ -21,21 +21,21 @@ interface OrderHeaderProps {
 defineProps<OrderHeaderProps>()
 
 // Agora o composable é singleton, então todos os componentes compartilham o mesmo estado
-const { loading, error, order } = useOrder()
+const { loading, order } = useOrder()
 </script>
 
 <template>
   <div class="bg-white rounded-lg shadow-2xs border border-gray-200 p-6">
     <!-- Loading state -->
-    <!-- <div v-if="loading" class="flex justify-center items-center py-8">
+    <div
+      v-if="loading"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
+    >
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-    </div> -->
-
-    <!-- Error state -->
-    <AlertMessage v-if="error" type="error" :message="error" dismissible class="mb-4" />
+    </div>
 
     <!-- Content -->
-    <div v-else class="flex flex-col gap-6 md:flex-row">
+    <div class="flex flex-col gap-6 md:flex-row">
       <template v-if="loading">
         <div
           class="bg-blue-600 w-full md:w-[200px] text-white rounded-lg rounded-l-none p-6 text-center flex flex-col items-center justify-center"

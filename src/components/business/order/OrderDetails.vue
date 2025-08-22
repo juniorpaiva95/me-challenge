@@ -6,11 +6,11 @@ import CardInfo from './CardInfo.vue'
 import Collapse from '../../ui/Collapse.vue'
 import Badge from '../../ui/Badge.vue'
 
-const { loading, order } = useOrder()
+const { loading, order, error } = useOrder()
 </script>
 
 <template>
-  <div class="w-full mb-6">
+  <div class="w-full mb-6" v-if="!error">
     <CardInfo
       :loading="loading"
       title="Supplier"
@@ -116,7 +116,7 @@ const { loading, order } = useOrder()
     </CardInfo>
   </div>
 
-  <Collapse :defaultOpen="true">
+  <Collapse :defaultOpen="true" v-if="!error">
     <template #header>
       <div class="flex items-center">
         <span class="font-semibold !text-[#303E49] mr-2"

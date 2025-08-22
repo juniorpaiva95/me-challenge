@@ -55,6 +55,7 @@ export class ApiOrderRepository implements OrderRepository {
   constructor(private httpClient: HttpClient) {}
 
   async getOrderById(id: string): Promise<Order> {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     const response = await this.httpClient.get<Order>(`/orders/${id}`)
     return response.data
   }

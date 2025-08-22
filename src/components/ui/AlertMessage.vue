@@ -81,13 +81,14 @@ const alertIcon = computed(() => {
 })
 
 const closeButtonClasses = computed(() => {
-  const baseClasses = 'ml-auto p-1 rounded-full hover:bg-opacity-20 transition-colors'
+  const baseClasses =
+    'ml-auto p-1 rounded-full hover:bg-opacity-20 transition-colors cursor-pointer'
 
   const buttonClasses = {
-    success: 'text-green-600 hover:bg-green-600',
-    warning: 'text-yellow-600 hover:bg-yellow-600',
-    info: 'text-blue-600 hover:bg-blue-600',
-    error: 'text-red-600 hover:bg-red-600',
+    success: 'text-green-600',
+    warning: 'text-yellow-600',
+    info: 'text-blue-600',
+    error: 'text-red-600',
   }
 
   return `${baseClasses} ${buttonClasses[props.type]}`

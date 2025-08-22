@@ -4,12 +4,13 @@ import { OrderHeader, OrderDetails } from '@/components/business'
 import { useOrder } from '@/composables/useOrder'
 import { onMounted } from 'vue'
 import { MoveLeft, Printer } from 'lucide-vue-next'
+import AlertMessage from '../components/ui/AlertMessage.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const orderId = route.params.id
-const { fetchOrderById } = useOrder()
+const { fetchOrderById, error } = useOrder()
 
 onMounted(async () => {
   await fetchOrderById(orderId as string)
@@ -39,7 +40,11 @@ const printOrder = () => {
       </button>
     </div>
   </div>
-  <OrderHeader />
-  <br />
-  <OrderDetails />
+
+  <AlertMessage v-if="error" type="error" :message="error" dismissible class="mb-4" />
+
+  <main v-if="!error" class="space-y-6">
+    <OrderHeader />
+    <OrderDetails />
+  </main>
 </template>

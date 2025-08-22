@@ -11,7 +11,7 @@ const viewOrder = (id: string) => {
 </script>
 <template>
   <div class="flex justify-center items-center h-svh gap-4">
-    <CallToAction title="View Order">
+    <CallToAction title="View Order" data-testid="view-order-1">
       <template #description>
         <p>View <span class="font-bold text-green-500">order</span> with your order id (1)</p>
       </template>
@@ -25,7 +25,7 @@ const viewOrder = (id: string) => {
       </template>
     </CallToAction>
 
-    <CallToAction title="View Order">
+    <CallToAction title="View Order" data-testid="view-order-2">
       <template #description>
         <p>
           View <span class="font-bold text-red-500">inexistent order</span> with your order id (2)

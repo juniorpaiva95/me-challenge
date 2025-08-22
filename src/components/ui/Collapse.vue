@@ -134,7 +134,6 @@ defineExpose({
         :aria-labelledby="`collapse-header-${uid}`"
       >
         <div class="p-4 bg-white">
-          <!-- Conteúdo do Corpo -->
           <slot />
         </div>
       </div>

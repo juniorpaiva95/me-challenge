@@ -23,6 +23,8 @@ export function useOrder() {
       order.value = await orderRepository.getOrderById(id)
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Erro ao buscar pedido'
+      clearOrder()
+      clearError()
       throw err
     } finally {
       loading.value = false

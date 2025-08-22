@@ -91,7 +91,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="noBorder ? '' : 'border border-gray-200 rounded-lg overflow-hidden p-3'">
+  <div :class="noBorder ? '' : 'border border-gray-200 rounded-lg overflow-hidden p-3 bg-white'">
     <!-- Header do Collapse -->
     <button
       :class="headerClasses"

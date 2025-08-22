@@ -1,17 +1,15 @@
 <template>
   <div
     :class="[
-      'skeleton',
-      `skeleton--${shape}`,
-      `skeleton--${size}`,
-      { 'skeleton--animated': animated },
+      'ui-skeleton',
+      `ui-skeleton--${shape}`,
+      `ui-skeleton--${size}`,
+      { 'ui-skeleton--animated': animated },
+      `ui-skeleton--${theme}`,
     ]"
     :style="skeletonStyles"
-    :aria-label="ariaLabel"
     role="status"
-  >
-    <span v-if="showContent" class="sr-only">{{ ariaLabel }}</span>
-  </div>
+  ></div>
 </template>
 
 <script setup lang="ts">
@@ -23,22 +21,14 @@ interface Props {
   width?: string | number
   height?: string | number
   animated?: boolean
-  showContent?: boolean
-  ariaLabel?: string
-  rows?: number
-  avatar?: boolean
-  avatarSize?: 'sm' | 'md' | 'lg'
+  theme?: 'light' | 'dark'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   shape: 'line',
   size: 'md',
   animated: true,
-  showContent: false,
-  ariaLabel: 'Carregando conteúdo...',
-  rows: 3,
-  avatar: false,
-  avatarSize: 'md',
+  theme: 'light',
 })
 
 const skeletonStyles = computed(() => {
@@ -57,96 +47,110 @@ const skeletonStyles = computed(() => {
 </script>
 
 <style scoped>
-.skeleton {
+.ui-skeleton {
   background: var(--color-secondary-200);
   border-radius: var(--border-radius-md);
   position: relative;
   overflow: hidden;
-  margin-bottom: var(--spacing-3);
+  margin-bottom: var(--spacing-1);
+  /* Melhor contraste em diferentes fundos */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Skeleton com fundo escuro (para fundos coloridos como azul) */
+.ui-skeleton--dark {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Skeleton com fundo claro (padrão) */
+.ui-skeleton--light {
+  background: var(--color-secondary-200);
 }
 
 /* Shapes */
-.skeleton--line {
+.ui-skeleton--line {
   height: 1em;
   width: 100%;
 }
 
-.skeleton--circle {
+.ui-skeleton--circle {
   border-radius: var(--border-radius-full);
   aspect-ratio: 1;
 }
 
-.skeleton--rectangle {
+.ui-skeleton--rectangle {
   width: 100%;
   height: 100%;
 }
 
-.skeleton--avatar {
+.ui-skeleton--avatar {
   border-radius: var(--border-radius-full);
   aspect-ratio: 1;
 }
 
-.skeleton--title {
+.ui-skeleton--title {
   height: 1.5em;
   width: 100%;
   border-radius: var(--border-radius-sm);
 }
 
-.skeleton--paragraph {
+.ui-skeleton--paragraph {
   height: 1em;
   width: 100%;
   border-radius: var(--border-radius-sm);
 }
 
 /* Sizes */
-.skeleton--xs {
+.ui-skeleton--xs {
   min-height: var(--spacing-4);
   min-width: var(--spacing-4);
 }
 
-.skeleton--sm {
+.ui-skeleton--sm {
   min-height: var(--spacing-5);
   min-width: var(--spacing-5);
 }
 
-.skeleton--md {
+.ui-skeleton--md {
   min-height: var(--spacing-6);
   min-width: var(--spacing-6);
 }
 
-.skeleton--lg {
+.ui-skeleton--lg {
   min-height: var(--spacing-8);
   min-width: var(--spacing-8);
 }
 
-.skeleton--xl {
+.ui-skeleton--xl {
   min-height: var(--spacing-10);
   min-width: var(--spacing-10);
 }
 
-.skeleton--2xl {
+.ui-skeleton--2xl {
   min-height: var(--spacing-12);
   min-width: var(--spacing-12);
 }
 
 /* Avatar sizes */
-.skeleton--avatar.skeleton--sm {
+.ui-skeleton--avatar.ui-skeleton--sm {
   width: var(--spacing-8);
   height: var(--spacing-8);
 }
 
-.skeleton--avatar.skeleton--md {
+.ui-skeleton--avatar.ui-skeleton--md {
   width: var(--spacing-10);
   height: var(--spacing-10);
 }
 
-.skeleton--avatar.skeleton--lg {
+.ui-skeleton--avatar.ui-skeleton--lg {
   width: var(--spacing-12);
   height: var(--spacing-12);
 }
 
 /* Animation */
-.skeleton--animated::before {
+.ui-skeleton--animated::before {
   content: '';
   position: absolute;
   top: 0;
@@ -164,18 +168,5 @@ const skeletonStyles = computed(() => {
   100% {
     left: 100%;
   }
-}
-
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 </style>

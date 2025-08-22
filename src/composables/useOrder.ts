@@ -3,17 +3,11 @@ import { AxiosHttpClient } from '@/services/api'
 import { ApiOrderRepository } from '@/services/api/repositories'
 import type { Order } from '@/services/api/repositories'
 
-/**
- * Composable para gerenciar pedidos
- * Seguindo o padrão de composables do Vue 3
- */
-export function useOrder() {
-  // Estado reativo
-  const order = ref<Order | null>(null)
-  const loading = ref(false)
-  const error = ref<string | null>(null)
+const order = ref<Order | null>(null)
+const loading = ref(false)
+const error = ref<string | null>(null)
 
-  // Instâncias dos serviços
+export function useOrder() {
   const httpClient = new AxiosHttpClient()
   const orderRepository = new ApiOrderRepository(httpClient)
 
@@ -31,7 +25,7 @@ export function useOrder() {
       error.value = err instanceof Error ? err.message : 'Erro ao buscar pedido'
       throw err
     } finally {
-      loading.value = false
+      loading.value = true
     }
   }
 
@@ -45,12 +39,10 @@ export function useOrder() {
   }
 
   return {
-    // Estado (somente leitura)
     order: readonly(order),
     loading: readonly(loading),
     error: readonly(error),
 
-    // Ações
     fetchOrderById,
     clearOrder,
     clearError,

@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { OrderHeader } from '@/components/business'
+import { OrderHeader, OrderDetails } from '@/components/business'
+import { useOrder } from '@/composables/useOrder'
+import { onMounted } from 'vue'
+
+const { fetchOrderById } = useOrder()
+
+onMounted(async () => {
+  await fetchOrderById('1')
+})
 </script>
 
 <template>
@@ -8,7 +16,9 @@ import { OrderHeader } from '@/components/business'
     <OrderHeader />
 
     <!-- Main Content -->
-    <main class="container section"></main>
+    <main class="section py-10">
+      <OrderDetails />
+    </main>
   </div>
 </template>
 

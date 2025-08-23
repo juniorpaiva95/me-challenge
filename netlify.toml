@@ -1,9 +1,15 @@
 [build]
   publish = "dist"
   command = "npm run build"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Configuração para desenvolvimento local
+[dev]
+  functions = "netlify/functions"
+  port = 8888
 
 # Headers para CORS e outras configurações
 [[headers]]
@@ -14,8 +20,22 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Headers específicos para as funções da API
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
+
 # Redirecionamentos
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+# Redirecionamento específico para a API
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api-proxy/:splat"
   status = 200

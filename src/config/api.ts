@@ -1,7 +1,7 @@
 // Configuração da API que funciona tanto em desenvolvimento quanto em produção
 const isDevelopment = import.meta.env.DEV
 
-// URL base da API - em desenvolvimento usa proxy, em produção usa URL completa
+// URL base da API - em desenvolvimento usa proxy local, em produção usa Netlify Function
 const getBaseUrl = () => {
   // Se tiver uma variável de ambiente específica, usa ela
   if (import.meta.env.VITE_API_BASE_URL) {
@@ -12,18 +12,16 @@ const getBaseUrl = () => {
   if (isDevelopment) {
     return '/api'
   }
-  return 'https://api.mercadoe.space'
+
+  // Em produção, usa a Netlify Function como proxy
+  // A URL será relativa ao domínio do Netlify
+  return '/.netlify/functions/api-proxy'
 }
 
 export const API_CONFIG = {
   BASE_URL: getBaseUrl(),
 
   TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000'),
-
-  AUTH: {
-    ENABLED: import.meta.env.VITE_AUTH_ENABLED === 'true',
-    TOKEN_KEY: import.meta.env.VITE_AUTH_TOKEN_KEY || 'auth_token',
-  },
 
   DEFAULT_HEADERS: {
     'Content-Type': 'application/json',

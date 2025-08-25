@@ -1,4 +1,4 @@
-import type { HttpClient } from '@/services/api'
+import type { HttpClient } from '@/core/http/http-client'
 
 export interface Contact {
   name: string

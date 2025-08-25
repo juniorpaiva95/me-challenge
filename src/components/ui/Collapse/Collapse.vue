@@ -100,6 +100,7 @@ defineExpose({
       type="button"
       :aria-expanded="isOpen"
       :aria-controls="`collapse-${uid}`"
+      data-testid="collapse-toggle-button"
     >
       <!-- Conteúdo do Header (Título ou Slot) -->
       <div class="flex items-center flex-1">
@@ -132,6 +133,7 @@ defineExpose({
         :id="`collapse-${uid}`"
         role="region"
         :aria-labelledby="`collapse-header-${uid}`"
+        :aria-expanded="isOpen"
       >
         <div class="p-4 bg-white">
           <slot />

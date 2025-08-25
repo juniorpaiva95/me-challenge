@@ -68,7 +68,9 @@ const bodyClasses = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <div
+    class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:scale-[1.01] transition-all duration-300"
+  >
     <div :class="headerClasses">
       <div class="flex-1">
         <div :class="titleClasses">

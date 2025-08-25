@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ApiResponse, RequestConfig } from '@/types/api'
+import type { ApiResponse, RequestConfig } from '@/core/http/api.types'
 
 /**
  * Interface para o cliente HTTP

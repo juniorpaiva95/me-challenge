@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
-import type { HttpClient } from './http-client'
-import type { ApiResponse, RequestConfig, ApiError } from '@/types/api'
+import type { HttpClient } from '@/core/http/http-client'
+import type { ApiResponse, RequestConfig, ApiError } from '@/core/http/api.types'
 import { API_CONFIG } from '@/config/api'
 
 /**

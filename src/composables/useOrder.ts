@@ -1,7 +1,7 @@
 import { ref, readonly } from 'vue'
-import { AxiosHttpClient } from '@/services/api'
-import { ApiOrderRepository } from '@/services/api/repositories'
-import type { Order } from '@/services/api/repositories'
+import { AxiosHttpClient } from '@/core/http/axios-client'
+import { ApiOrderRepository } from '@/features/order/services/order-repository'
+import type { Order } from '@/features/order/services/order-repository'
 
 const order = ref<Order | null>(null)
 const loading = ref(false)

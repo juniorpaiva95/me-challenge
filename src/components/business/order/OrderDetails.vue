@@ -3,7 +3,7 @@ import { useOrder } from '@/composables/useOrder'
 import Skeleton from '../../ui/Skeleton.vue'
 import { BookOpenCheck, Building2, Mail, MapPin, Phone, Printer, User } from 'lucide-vue-next'
 import CardInfo from './CardInfo.vue'
-import Collapse from '../../ui/Collapse.vue'
+import Collapse from '../../ui/Collapse/Collapse.vue'
 import Badge from '../../ui/Badge.vue'
 
 const { loading, order, error } = useOrder()

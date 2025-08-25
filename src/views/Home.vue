@@ -4,10 +4,7 @@ import CallToAction from '../components/ui/CallToAction.vue'
 
 const router = useRouter()
 
-const viewOrder = (id: string) => {
-  router.push({ name: 'order-view', params: { id: id } })
-  console.log(`Ação customizada, indo para a rota order-view com o id ${id}`)
-}
+const viewOrder = (id: string) => router.push({ name: 'order-view', params: { id: id } })
 </script>
 <template>
   <div class="flex justify-center items-center h-svh gap-4">

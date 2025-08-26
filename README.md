@@ -7,6 +7,8 @@
 
 Este projeto é um challenge técnico focado em demonstrar habilidades em **Vue.js 3**, **TypeScript** e **arquitetura escalável**. A aplicação simula uma página de detalhes de pedido, implementando:
 
+> 🌐 **Demo em Produção:** [Acesse a aplicação](https://wondrous-arithmetic-04668b.netlify.app/order/1)
+
 - ✅ **Arquitetura limpa** com separação de responsabilidades
 - ✅ **Padrões SOLID** e princípios de clean code
 - ✅ **Repository Pattern** para abstração de dados
